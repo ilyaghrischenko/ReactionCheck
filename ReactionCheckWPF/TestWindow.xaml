@@ -5,11 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReactionCheckWPF"
         mc:Ignorable="d"
-        Title="TestWindow" Height="350" Width="700">
+        Title="Test" Height="350" Width="350"
+        MaxHeight="350" MaxWidth="350"
+        MinHeight="350" MinWidth="350"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="9*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -24,12 +27,12 @@
                 <RowDefinition Height="0.2*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Background="BlanchedAlmond">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="1.6*"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="1.6*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
@@ -39,7 +42,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Your reaction:"
+                    <TextBlock Text="Reaction:"
                                HorizontalAlignment="Center"/>
                     <TextBlock Grid.Row="1"
                                Text="0"
@@ -73,7 +76,7 @@
                 <Button Grid.Column="1"
                         Content="1"
                         x:Name="Button1LVL1"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
             </Grid>
             <Grid Grid.Row="3"
@@ -90,12 +93,12 @@
                 <Button Grid.Column="1"
                         Content="1"
                         x:Name="Button1LVL2"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
                 <Button Grid.Column="3"
                         Content="2"
                         x:Name="Button2LVL2"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
             </Grid>
             <Grid Grid.Row="3"
@@ -114,17 +117,17 @@
                 <Button Grid.Column="1"
                         Content="1"
                         x:Name="Button1LVL3"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
                 <Button Grid.Column="3"
                         Content="2"
                         x:Name="Button2LVL3"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
                 <Button Grid.Column="5"
                         Content="3"
                         x:Name="Button3LVL3"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
             </Grid>
             <Grid Grid.Row="3"
@@ -145,22 +148,65 @@
                 <Button Grid.Column="1"
                         Content="1"
                         x:Name="Button1LVL4"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
                 <Button Grid.Column="3"
                         Content="2"
                         x:Name="Button2LVL4"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
                 <Button Grid.Column="5"
                         Content="3"
                         x:Name="Button3LVL4"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
                 <Button Grid.Column="7"
                         Content="4"
                         x:Name="Button4LVL4"
-                        Click="ReactionButton_Click"
+                        Click="ReactionButtonClick"
+                        IsEnabled="False"/>
+            </Grid>
+            <Grid Grid.Row="3"
+                  x:Name="LVL5"
+                  Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2.8*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2.8*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2.8*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2.8*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2.8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1"
+                        Content="1"
+                        x:Name="Button1LVL5"
+                        Click="ReactionButtonClick"
+                        IsEnabled="False"/>
+                <Button Grid.Column="3"
+                        Content="2"
+                        x:Name="Button2LVL5"
+                        Click="ReactionButtonClick"
+                        IsEnabled="False"/>
+                <Button Grid.Column="5"
+                        Content="3"
+                        x:Name="Button3LVL5"
+                        Click="ReactionButtonClick"
+                        IsEnabled="False"/>
+                <Button Grid.Column="7"
+                        Content="4"
+                        x:Name="Button4LVL5"
+                        Click="ReactionButtonClick"
+                        IsEnabled="False"/>
+                <Button Grid.Column="9"
+                        Content="5"
+                        x:Name="Button5LVL5"
+                        Click="ReactionButtonClick"
                         IsEnabled="False"/>
             </Grid>
 
@@ -174,7 +220,12 @@
                 <Button Grid.Column="1"
                         Content="Start"
                         x:Name="StartButton"
-                        Click="StartButton_Click"/>
+                        Click="StartButtonClick"/>
+                <Button Grid.Column="1"
+                        Content="Save"
+                        x:Name="SaveButton"
+                        Click="SaveButtonClick"
+                        Visibility="Hidden"/>
             </Grid>
         </Grid>
     </Grid>

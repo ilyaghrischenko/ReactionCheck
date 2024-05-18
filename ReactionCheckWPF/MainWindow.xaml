@@ -5,15 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReactionCheckWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400">
+        Title="Log in" Height="450" Width="300"
+        MaxHeight="450" MaxWidth="300"
+        MinHeight="450" MinWidth="300"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="Bisque">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="0.2*"/>
@@ -62,7 +65,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Count buttons:"
+                <TextBlock Text="Max buttons count:"
                            HorizontalAlignment="Center"/>
                 <ComboBox Grid.Row="1"
                           x:Name="CountButtonBox"
@@ -70,6 +73,7 @@
                     <ComboBoxItem>2</ComboBoxItem>
                     <ComboBoxItem>3</ComboBoxItem>
                     <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
                 </ComboBox>
             </Grid>
 
@@ -109,7 +113,7 @@
                 <Button Grid.Column="1"
                         Content="Go!"
                         x:Name="GoButton"
-                        Click="GoButton_Click"/>
+                        Click="GoButtonClick"/>
             </Grid>
         </Grid>
     </Grid>

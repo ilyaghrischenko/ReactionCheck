@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ReactionCheckWPF.Models;
 
 namespace ReactionCheckWPF
 {
@@ -11,7 +10,7 @@ namespace ReactionCheckWPF
             InitializeComponent();
         }
 
-        private async void GoButton_Click(object sender, RoutedEventArgs e)
+        private async void GoButtonClick(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(FirstNameInput.Text)
                || string.IsNullOrEmpty(LastNameInput.Text)
@@ -38,7 +37,6 @@ namespace ReactionCheckWPF
             int countButtons = int.Parse((CountButtonBox.SelectedItem as ComboBoxItem).Content.ToString());
             TestWindow window = new(FirstNameInput.Text, LastNameInput.Text, new(countButtons, pressInterval, clickBeforeLevelUp));
             window.ShowDialog();
-            Close();
         }
     }
 }

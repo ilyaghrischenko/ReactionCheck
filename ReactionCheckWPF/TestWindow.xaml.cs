@@ -1,21 +1,26 @@
-﻿using System.Diagnostics;
+﻿using ReactionCheckWPF.Models;
+using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using ReactionCheckWPF.Models;
+using System.Windows.Media;
 
 namespace ReactionCheckWPF
 {
     public partial class TestWindow : Window
     {
-        private string _firstName;
-        private string _lastName;
-        private TestInfo _testInfo;
+        private string FirstName;
+        private string LastName;
+        private TestInfo TestInfo;
 
-        private Stopwatch _timer = new();
-        private int _clickCount = 0;
-        private int _currentLevel = 1;
-        private List<TimeSpan> _reactionList = new();
+        private Stopwatch timer = new();
+        private int clickCount = 0;
+        private int currentLevel = 1;
+        private List<double> reactionList = new();
         private Dictionary<int, Grid> levelGrid;
+        private Dictionary<Grid, List<Button>> levelButtonsList;
+        private Random random = new();
 
         public TestWindow()
         {
@@ -24,46 +29,79 @@ namespace ReactionCheckWPF
         public TestWindow(string firstName, string lastName, TestInfo testInfo)
         {
             InitializeComponent();
-            _firstName = firstName;
-            _lastName = lastName;
-            _testInfo = testInfo;
+            FirstName = firstName;
+            LastName = lastName;
+            TestInfo = testInfo;
             levelGrid = new()
             {
                 {1, LVL1},
                 {2, LVL2},
                 {3, LVL3},
-                {4, LVL4}
+                {4, LVL4},
+                {5, LVL5}
+            };
+            levelButtonsList = new()
+            {
+                {LVL1, [Button1LVL1]},
+                {LVL2, [Button1LVL2, Button2LVL2]},
+                {LVL3, [Button1LVL3, Button2LVL3, Button3LVL3]},
+                {LVL4, [Button1LVL4, Button2LVL4, Button3LVL4, Button4LVL4]},
+                {LVL5, [Button1LVL5, Button2LVL5, Button3LVL5, Button4LVL5, Button5LVL5]}
             };
         }
 
-        private void LevelUp()
+        private async Task LevelUp()
         {
-            levelGrid[_currentLevel++].Visibility = Visibility.Hidden;
-            levelGrid[_currentLevel].Visibility = Visibility.Visible;
-        }
-
-        private async void ReactionButton_Click(object sender, RoutedEventArgs e)
-        {
-            _timer.Stop();
-            (sender as Button).IsEnabled = false;
-            _reactionList.Add(_timer.Elapsed);
-            ReactionResult.Text = _timer.Elapsed.ToString();
-            _timer.Reset();
-
-            ++_clickCount;
-            if (_clickCount == _testInfo.ClicksBeforeLevelUp)
+            if (currentLevel == TestInfo.CountLevels)
             {
-                LevelUp();
-                CurrentLevel.Text = _currentLevel.ToString();
+                MessageBox.Show("GAME OVER");
+                StartButton.Visibility = Visibility.Hidden;
+                SaveButton.Visibility = Visibility.Visible;
+                return;
             }
+            levelGrid[currentLevel++].Visibility = Visibility.Hidden;
+            levelGrid[currentLevel].Visibility = Visibility.Visible;
+            clickCount = 0;
+        }
+        private async Task ActiveButton()
+        {
+            await Task.Delay(TestInfo.PressInterval * 1000);
+            var buttonsList = levelButtonsList[levelGrid[currentLevel]];
+            var rndButton = buttonsList[random.Next(0, buttonsList.Count)];
+            rndButton.Background = Brushes.DarkRed;
+            rndButton.IsEnabled = true;
+            timer.Start();
         }
 
-        private async void StartButton_Click(object sender, RoutedEventArgs e)
+        private async void ReactionButtonClick(object sender, RoutedEventArgs e)
+        {
+            timer.Stop();
+            (sender as Button).IsEnabled = false;
+            reactionList.Add(timer.Elapsed.TotalSeconds);
+            ReactionResult.Text = reactionList.Last().ToString();
+            timer.Reset();
+
+            ++clickCount;
+            if (clickCount == TestInfo.ClicksBeforeLevelUp)
+            {
+                await LevelUp();
+                CurrentLevel.Text = currentLevel.ToString();
+                StartButton.IsEnabled = true;
+                return;
+            }
+            await ActiveButton();
+        }
+        private async void StartButtonClick(object sender, RoutedEventArgs e)
         {
             StartButton.IsEnabled = false;
-            await Task.Delay(new Random().Next(1, 4) * 1000);
-            Button1LVL1.IsEnabled = true;
-            _timer.Start();
+            await ActiveButton();
+        }
+        private async void SaveButtonClick(object sender, RoutedEventArgs e)
+        {
+            Customer customer = new(FirstName, LastName, reactionList.Average());
+            await File.AppendAllTextAsync("results.json", JsonSerializer.Serialize(customer));
+            MessageBox.Show("Saved!");
+            Close();
         }
     }
 }
